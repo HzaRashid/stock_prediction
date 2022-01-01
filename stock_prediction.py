@@ -10,7 +10,7 @@ import pandas_datareader as dr
 
 # get stock data from 'start' to 'end' dates
 start_date, end_date = "2000-01-01", "2021-12-31"
-df = dr.DataReader('AAPL', 'yahoo', start=start_date, end=end_date)
+df = dr.DataReader('TSLA', 'yahoo', start=start_date, end=end_date)
 
 # goal is to predict closing prices
 data = df.filter(['Close'])
