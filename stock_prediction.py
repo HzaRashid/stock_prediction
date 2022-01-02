@@ -2,15 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LSTM
-from tensorflow import keras, optimizers
-
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import pandas_datareader as dr
 
 # get stock data from 'start' to 'end' dates
-start_date, end_date = "2000-01-01", "2021-12-31"
-df = dr.DataReader('TSLA', 'yahoo', start=start_date, end=end_date)
+start_date, end_date = "1990-01-01", "2021-12-31"
+df = dr.DataReader('^GSPC', 'yahoo', start=start_date, end=end_date)
 
 # goal is to predict closing prices
 data = df.filter(['Close'])
@@ -54,8 +52,8 @@ x_test, y_test = np.array(x_test), np.array(y_test)
 # build model
 model = Sequential()
 model.add(LSTM(units=60, return_sequences=True, input_shape=(x_train.shape[1], 1)))
-model.add(LSTM(units=60, return_sequences=True))
-model.add(LSTM(units=30))
+model.add(LSTM(units=45, return_sequences=True))
+model.add(LSTM(units=15))
 model.add(Dense(units=15))
 model.add(Dense(units=1))
 
@@ -67,7 +65,8 @@ model.fit(x_train, y_train, epochs=5)
 predictions = model.predict(x_test)
 
 # unscale the predictions and targets
-predictions_unscaled, y_test_unscaled = scaler.inverse_transform(predictions),  scaler.inverse_transform(y_test)
+predictions_unscaled = scaler.inverse_transform(predictions)
+y_test_unscaled = scaler.inverse_transform(y_test)
 
 # compute error
 rmse_scaled = np.sqrt(np.mean(predictions - y_test)**2)  # root mean squared error
@@ -80,12 +79,8 @@ test.insert(loc=1, column='Predictions', value=predictions_unscaled)
 
 print(rmse_scaled, rmse)
 plt.figure(figsize=(14, 7))
-plt.title('Closing Price Prediction')
-plt.xlabel('Date'), plt.ylabel('Price (USD $)')
+plt.title('Closing Prices', fontsize=25)
+plt.xlabel('Date', fontsize=15), plt.ylabel('Price (USD $)', fontsize=15)
 plt.plot(test[['Close', 'Predictions']])
 plt.legend(['Actual', 'Prediction'], loc="upper left")
 plt.show()
-
-
-
-
