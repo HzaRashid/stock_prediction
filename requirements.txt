@@ -6,8 +6,6 @@ pandas_datareader
 pandas
 streamlit
 numpy
-stock_models.py
-save_models.py
 TSLA_model.h5
 NVDA_model.h5
 AAPL_model.h5
