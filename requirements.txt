@@ -1,0 +1,8 @@
+sklearn
+keras
+tensorflow
+plotly
+pandas_datareader
+pandas
+streamlit
+numpy
