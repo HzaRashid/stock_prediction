@@ -1,5 +1,5 @@
 # stock_prediction
 
-Gather historical data of a stock, organize it into training and test sets, and build an [RNN](https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9) to predict some metric(s) of the stock.
+Gather historical data of a stock, organize it into training and test sets, and build an [RNN](https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9) to predict its closing prices.
 
--- Work in progress. The data setup and model are completed. The next step is to visual it with a web app/GUI
+I chose 4 stocks – Tesla, Nvidia, Apple, Disney – and the S&P 500 index, and made a model for each one. The models are located in stock_models.py. The models were trained in save_models.py (using 75% of the corresponding stock's closing price data), and saved there as well. Then, the models were tested in stock_app.py (using the remaining 25% of the data). 
