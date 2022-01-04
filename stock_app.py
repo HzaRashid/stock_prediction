@@ -1,23 +1,19 @@
-import datetime
-import streamlit as st
-import pandas as pd
-import pandas.core.frame
-import plotly
-from plotly import graph_objs as go
-import numpy as np
-import pandas_datareader as dr
-from keras.models import load_model
-import datetime as dt
 from save_models import start_date, curr_date, stock_list, trail
 from sklearn.preprocessing import MinMaxScaler
+from keras.models import load_model
+from plotly import graph_objs as go
+import pandas_datareader as dr
+import streamlit as st
+import pandas as pd
+import numpy as np
 
-st.title('Model Performance (Closing Prices)')
+
+st.title("Model Performance (Closing Prices)")
 
 ticker_options = stock_list
 
 user_choice_ticker = st.selectbox('Enter ticker', ticker_options)
 # st.subheader("Select start and end dates for the model's predictions:")
-
 
 @st.cache
 def get_test_data(ticker):
@@ -30,7 +26,6 @@ def get_test_data(ticker):
 
     # normalize data
     scaler = MinMaxScaler(feature_range=(0, 1))
-    scaled_data_array = scaler.fit_transform(data)
     scaled_data = pd.DataFrame(scaler.fit_transform(data))
 
     test_data = scaled_data.rename(columns={0: 'Close'})
@@ -61,40 +56,15 @@ data_load_state = st.text('...')
 ticker_data = get_test_data(user_choice_ticker)
 data_load_state.text('')
 
-# st.write(ticker_data.tail())
 
-# def plot_test_data():
-#     graph = go.Figure
-#     graph.add_trace(go.Scatter(xaxis=))
+def plot_data():
+    plot = go.Figure()
+    plot.add_trace(go.Scatter(x=ticker_data.index, y=ticker_data['Actual'], name='Actual Closing Price'))
+    plot.add_trace(go.Scatter(x=ticker_data.index, y=ticker_data['Predictions'], name='Predicted Closing Price'))
+    plot.layout.update(title_text='Actual and Predicted Closing Prices', xaxis_rangeslider_visible=True)
+    return plot
 
 
-if __name__ == "__main__":
-    data = get_test_data('TSLA')
-    
-    # data.index = data.index.date
-    # print(data.tail())
-    # df = dr.DataReader('TSLA', 'yahoo', start=start_date, end=curr_date)
-    # train_data_size = int(0.75 * len(df))
-    # data = df.filter(['Close'][train_data_size:])
-    # print('all good')
-    # data = get_test_data(user_choice_ticker)
-    # print(type(start_date))
-
-    # predictions =
-    #
-    #
-    # def plot():
-    #     graph = go.Figure()
-
-    # if end_date > today:
-    #     end_date = today
-    #
-    # if start_date > end_date:
-    #     temp_date = start_date
-    #     start_date = end_date
-    #     end_date = temp_date
-    #
-    # # need the last 'trail' number of days a make a prediction on the first day
-    # start_date = start_date - datetime.timedelta(days=trail)
+st.plotly_chart(plot_data())
 
 
