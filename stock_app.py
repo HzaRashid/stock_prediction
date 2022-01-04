@@ -64,7 +64,7 @@ data_load_state.text('')
 
 
 def plot_data():
-    plot = go.Figure([
+    fig = go.Figure([
         go.Scatter(
             x=ticker_data.index,
             y=ticker_data['Actual'],
@@ -80,11 +80,13 @@ def plot_data():
             line=dict(color='#FAA0A0')
         )
     ])
-    plot.layout.update(
+    fig.layout.update(
         title_text='Actual and Predicted Prices ($USD)',
+        xaxis_title='Date',
+        yaxis_title='Price ($)',
         xaxis_rangeslider_visible=True
     )
-    return plot
+    return fig
 
 
 st.plotly_chart(plot_data())
@@ -98,11 +100,12 @@ def plot_error():
             mode='lines',
             line=dict(color='#FAA0A0')
         )
-
     ])
+
     fig.layout.update(
-        title_text= 'Prediction Error (Abs. Difference, $USD)',
-        yaxis_title='Diff.: Actual and Predicted Price ',
+        title_text='Prediction Error (Absolute Difference: Actual and Predicted Prices, $USD)',
+        xaxis_title='Date',
+        yaxis_title='Difference ($)',
         xaxis_rangeslider_visible=True
     )
     return fig
