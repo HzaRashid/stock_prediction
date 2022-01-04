@@ -8,14 +8,13 @@ import pandas as pd
 import numpy as np
 
 
-st.title("Model Performance (Closing Prices)")
+st.title('Visualizing Model Performance')
+st.subheader("Closing Price Predictions")
 
 ticker_options = stock_list
-
 user_choice_ticker = st.selectbox('Enter ticker', ticker_options)
-# st.subheader("Select start and end dates for the model's predictions:")
 
-@st.cache
+@st.cache(allow_output_mutation=True)
 def get_test_data(ticker):
     # get stock data, only keep the closing prices
     df = dr.DataReader(ticker, 'yahoo', start=start_date, end=curr_date)
@@ -45,9 +44,16 @@ def get_test_data(ticker):
     scaled_predictions = model.predict(inputs)
     predictions = scaler.inverse_transform(scaled_predictions)
     data = data[trail:]
-    data.insert(loc=1, column='Predictions', value=predictions)
+    data.insert(loc=1, column='Prediction', value=predictions)
     data.index = data.index.date
     data = data.rename(columns={'Close': 'Actual'})
+
+    # targets_unscaled = scaler.inverse_transform(targets)
+    # rms_error = np.sqrt(np.mean(predictions - targets_unscaled) ** 2)
+    errors = []
+    for i in range(data.shape[0]):
+        errors.append(abs(data['Prediction'][i]-data['Actual'][i]))
+    data.insert(loc=2, column='Error', value=errors)
 
     return data
 
@@ -58,13 +64,48 @@ data_load_state.text('')
 
 
 def plot_data():
-    plot = go.Figure()
-    plot.add_trace(go.Scatter(x=ticker_data.index, y=ticker_data['Actual'], name='Actual Closing Price'))
-    plot.add_trace(go.Scatter(x=ticker_data.index, y=ticker_data['Predictions'], name='Predicted Closing Price'))
-    plot.layout.update(title_text='Actual and Predicted Closing Prices', xaxis_rangeslider_visible=True)
+    plot = go.Figure([
+        go.Scatter(
+            x=ticker_data.index,
+            y=ticker_data['Actual'],
+            name='Actual Closing Price',
+            mode='lines',
+            line=dict(color='dimgrey')
+        ),
+        go.Scatter(
+            x=ticker_data.index,
+            y=ticker_data['Prediction'],
+            name='Predicted Closing Price',
+            mode='lines',
+            line=dict(color='#FAA0A0')
+        )
+    ])
+    plot.layout.update(
+        title_text='Actual and Predicted Prices ($USD)',
+        xaxis_rangeslider_visible=True
+    )
     return plot
 
 
 st.plotly_chart(plot_data())
 
 
+def plot_error():
+    fig = go.Figure([
+        go.Scatter(
+            x=ticker_data.index,
+            y=ticker_data['Error'],
+            mode='lines',
+            line=dict(color='#FAA0A0')
+        )
+
+    ])
+    fig.layout.update(
+        title_text= 'Prediction Error (Abs. Difference, $USD)',
+        yaxis_title='Diff.: Actual and Predicted Price ',
+        xaxis_rangeslider_visible=True
+    )
+    return fig
+
+
+st.plotly_chart(plot_error())
