@@ -199,6 +199,3 @@ st.plotly_chart(plot_error())
 st.subheader('Raw Data ($USD)')
 st.write(ticker_data)
 
-if __name__ == "__main__":
-    data = get_test_data('TSLA')
-    print(data)
