@@ -29,6 +29,7 @@ def model_aapl():
     m.add(Dense(units=10))
     m.add(Dense(units=10))
     m.add(Dense(units=1))
+    return m
 
 
 def model_nvda():
@@ -58,11 +59,10 @@ def model_tsla():
 
 
 def model_btc():
-    model = Sequential()
-    model.add(LSTM(units=250, return_sequences=True, input_shape=(trail, 1)))
-    model.add(LSTM(units=500))
-    model.add(Dense(1))
-    return model
+    m = Sequential()
+    m.add(LSTM(units=512, input_shape=(trail, 1)))
+    m.add(Dense(1))
+    return m
 
 
 optimal_models = {'TSLA': model_tsla(),
@@ -135,6 +135,8 @@ data_load_state = st.text('Training model...')
 ticker_data = get_test_data(user_choice_ticker)
 data_load_state.text('')
 
+ticker_data = ticker_data.replace(',', '', regex=True)
+
 
 def plot_data():
     fig = go.Figure([
@@ -150,7 +152,7 @@ def plot_data():
             y=ticker_data['Prediction'],
             name='Predicted Closing Price',
             mode='lines',
-            line=dict(color='#FAA0A0')
+            line=dict(color='#F08080')
         )
     ])
     fig.layout.update(
@@ -171,12 +173,12 @@ def plot_error():
             x=ticker_data.index,
             y=ticker_data['Error'],
             mode='lines',
-            line=dict(color='#FAA0A0')
+            line=dict(color='#F08080')
         )
     ])
 
     fig.layout.update(
-        title_text='Prediction Error (Absolute Difference: Actual and Predicted Prices, $USD)',
+        title_text='Prediction Error (Absolute Difference Between Actual and Predicted Prices, $USD)',
         xaxis_title='Date',
         yaxis_title='Difference ($)',
         xaxis_rangeslider_visible=True
@@ -185,5 +187,5 @@ def plot_error():
 
 
 st.plotly_chart(plot_error())
-st.subheader('Model Data ($USD)')
+st.subheader('Raw Data ($USD)')
 st.write(ticker_data)
