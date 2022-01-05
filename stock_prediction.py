@@ -88,9 +88,11 @@ def get_test_data(ticker):
 
     # use 75% of data to train model, 25% to test
     train_data_size = int(0.75 * len(raw_data))
-
     train_data = scaled_data[:train_data_size]
-    test_data = scaled_data[train_data_size-90:].rename(columns={0: 'Close'})
+
+    # subtract tail since last 90 days is needed to predict 1st day of test data
+    test_data = scaled_data[train_data_size-trail:]
+    test_data = test_data.rename(columns={0: 'Close'})
 
     # convert train and test data to numpy arrays
     train_data_array = np.array(train_data)
@@ -110,13 +112,15 @@ def get_test_data(ticker):
         x_test.append(test_data_array[i:i + trail])
         y_test.append(test_data_array[i + trail])
 
+    # convert to numpy arrays to be read for training
     x_test, y_test = np.array(x_test), np.array(y_test)
 
+    # get corresponding model for the stock and train it
     model = optimal_models.get(ticker)
-
     model.compile(loss='mean_squared_error', optimizer='adam')
-    train_model = model.fit(x_train, y_train, epochs=3)
+    model.fit(x_train, y_train, epochs=3)
 
+    # unscale the predictions to they can be inserted into to the test data
     scaled_predictions = model.predict(x_test)
     predictions = scaler.inverse_transform(scaled_predictions)
 
@@ -125,6 +129,7 @@ def get_test_data(ticker):
     data.index = data.index.date
     data = data.rename(columns={'Close': 'Actual'})
 
+    # compute error of all predictions
     errors = []
     for i in range(data.shape[0]):
         errors.append(abs(data['Prediction'][i]-data['Actual'][i]))
@@ -139,7 +144,7 @@ data_load_state.text('')
 
 ticker_data = ticker_data.replace(',', '', regex=True)
 
-
+# plot Actual and Predicted closing prices
 def plot_data():
     fig = go.Figure([
         go.Scatter(
@@ -168,7 +173,7 @@ def plot_data():
 
 st.plotly_chart(plot_data())
 
-
+# plot error
 def plot_error():
     fig = go.Figure([
         go.Scatter(
@@ -189,5 +194,11 @@ def plot_error():
 
 
 st.plotly_chart(plot_error())
+
+# show raw data
 st.subheader('Raw Data ($USD)')
 st.write(ticker_data)
+
+if __name__ == "__main__":
+    data = get_test_data('TSLA')
+    print(data)
