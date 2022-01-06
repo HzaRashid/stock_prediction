@@ -16,7 +16,7 @@ ticker_options = ['TSLA', 'NVDA', 'DIS', 'AAPL', 'BTC-USD']
 
 user_choice_ticker = st.selectbox('Enter ticker', ticker_options)
 
-start_date = "1900-01-01"
+start_date = "1950-01-01"
 curr_date = date.today()
 trail = 90
 
@@ -118,7 +118,7 @@ def get_test_data(ticker):
     # get corresponding model for the stock and train it
     model = optimal_models.get(ticker)
     model.compile(loss='mean_squared_error', optimizer='adam')
-    model.fit(x_train, y_train, epochs=3)
+    model.fit(x_train, y_train, epochs=5)
 
     # unscale the predictions to they can be inserted into to the test data
     scaled_predictions = model.predict(x_test)
@@ -198,4 +198,3 @@ st.plotly_chart(plot_error())
 # show raw data
 st.subheader('Raw Data ($USD)')
 st.write(ticker_data)
-
