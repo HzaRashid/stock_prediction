@@ -3,3 +3,4 @@ pandas_datareader
 pandas
 streamlit
 datetime
+r'/Users/hamzarashid/stock_models/TSLA_model_data.csv'
