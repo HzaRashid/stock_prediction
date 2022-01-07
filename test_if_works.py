@@ -4,11 +4,6 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 
-tsla_csv = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
-
-file_options = {'TSLA': tsla_csv,
-                }
-
 st.title('Visualizing Model Performance')
 st.subheader("Closing Price Predictions")
 
@@ -20,17 +15,7 @@ start_date = "1950-01-01"
 curr_date = date.today()
 trail = 90
 
-# @st.cache
-# def get_data(ticker):
-#     file = file_options.get(ticker)
-#     data = pd.read_csv(file)
-#     data = data.rename(columns={'Unnamed: 0': 'Date'})
-#     data.index = data['Date']
-#     data = data.drop(columns={'Date'})
-#     data.reset_index(inplace=True)
-#     return data
-
-df = pd.read_csv(tsla_csv)
+df = pd.read_csv(r'/Users/hamzarashid/stock_models/TSLA_model_data.csv')
 st.subheader(user_choice_ticker)
 st.dataframe(df)
 
@@ -73,3 +58,19 @@ if __name__ == '__main__':
     # file:///Users/hamzarashid/tensorflow-test/AAPL_model_data.csv
     # file:///Users/hamzarashid/tensorflow-test/BTC-USD_model_data.csv
 
+# @st.cache
+# def get_data(ticker):
+#     file = file_options.get(ticker)
+#     data = pd.read_csv(file)
+#     data = data.rename(columns={'Unnamed: 0': 'Date'})
+#     data.index = data['Date']
+#     data = data.drop(columns={'Date'})
+#     data.reset_index(inplace=True)
+#     return data
+
+
+# tsla_csv = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
+# print(tsla_csv)
+
+# file_options = {'TSLA': tsla_csv,
+#                 }
