@@ -7,4 +7,4 @@ I chose 4 stocks – Tesla, Nvidia, Apple, Disney – as well as Bitcoin, and ma
 The entire project can be found in [stock_prediction.py](https://github.com/HzaRashid/stock_prediction/blob/main/stock_prediction.py). 
 
 
-#### The visualization can be found [here](https://share.streamlit.io/hzarashid/stock_prediction/main/stock_prediction.py) 
+#### The visualization can be found [here](https://share.streamlit.io/hzarashid/stock_prediction/main/stock_app.py) 
