@@ -20,7 +20,7 @@ tsla_file = Path(__file__).parents[1] / 'tensorflow-test/TSLA_model_data.csv'
 # st.subheader(user_choice_ticker)
 # st.dataframe(df)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # tsla = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
     # print(tsla)
     # tsla_file = 'file://' + Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
@@ -73,5 +73,4 @@ if __name__ == '__main__':
 # tsla_csv = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
 # print(tsla_csv)
 
-# file_options = {'TSLA': tsla_csv,
-#                 }
+# file_options = {'TSLA': tsla_csv, }
