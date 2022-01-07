@@ -6,7 +6,7 @@ from pathlib import Path
 
 # tsla = Path(__file__).parents[1]/'stock_models/TSLA_model_data.csv'
 
-tsla_file = 'file://' + str(Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv')
+tsla_file = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
 # nvda_file = Path(__file__).parents[1] / 'stock_models/NVDA_model_data.csv'
 # dis_file = Path(__file__).parents[1] / 'stock_models/DIS_model_data.csv'
 # aapl_file = Path(__file__).parents[1] / 'stock_models/AAPL_model_data.csv'
@@ -50,6 +50,7 @@ def get_data(ticker):
     data = data.rename(columns={'Unnamed: 0': 'Date'})
     data.index = data['Date']
     data = data.drop(columns={'Date'})
+    data.reset_index(inplace=True)
     return data
 
 df = get_data(user_choice_ticker)
