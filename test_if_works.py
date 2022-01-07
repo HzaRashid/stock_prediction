@@ -18,6 +18,7 @@ trail = 90
 
 tsla_file = Path(__file__).parents[1] / 'TSLA_model_data.csv'
 fuck = pd.read_csv('TSLA_model_data.csv')
+st.write(fuck)
 print(tsla_file)
 # df = pd.read_csv(filepath_or_buffer=tsla_file)
 # st.subheader(user_choice_ticker)
