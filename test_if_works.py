@@ -2,6 +2,7 @@ from plotly import graph_objs as go
 from datetime import date
 import streamlit as st
 import pandas as pd
+import pandas_datareader as dr
 from pathlib import Path
 
 st.title('Visualizing Model Performance')
@@ -15,7 +16,9 @@ start_date = "1950-01-01"
 curr_date = date.today()
 trail = 90
 
-tsla_file = Path(__file__).parents[1] / 'tensorflow-test/TSLA_model_data.csv'
+tsla_file = Path(__file__).parents[1] / 'TSLA_model_data.csv'
+fuck = pd.read_csv('TSLA_model_data.csv')
+print(tsla_file)
 # df = pd.read_csv(filepath_or_buffer=tsla_file)
 # st.subheader(user_choice_ticker)
 # st.dataframe(df)
