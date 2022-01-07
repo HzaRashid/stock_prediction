@@ -15,7 +15,8 @@ start_date = "1950-01-01"
 curr_date = date.today()
 trail = 90
 
-df = pd.read_csv(r'/Users/hamzarashid/stock_models/TSLA_model_data.csv')
+tsla_file = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
+df = pd.read_csv(str(tsla_file))
 st.subheader(user_choice_ticker)
 st.dataframe(df)
 
