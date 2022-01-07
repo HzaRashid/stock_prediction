@@ -2,8 +2,23 @@ from plotly import graph_objs as go
 from datetime import date
 import streamlit as st
 import pandas as pd
+# from pathlib import Path
+
+# tsla = Path(__file__).parents[1]/'stock_models/TSLA_model_data.csv'
+
+# tsla_file = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
+# nvda_file = Path(__file__).parents[1] / 'stock_models/NVDA_model_data.csv'
+# dis_file = Path(__file__).parents[1] / 'stock_models/DIS_model_data.csv'
+# aapl_file = Path(__file__).parents[1] / 'stock_models/AAPL_model_data.csv'
+# btc_file = Path(__file__).parents[1] / 'stock_models/BTC-USD_model_data.csv'
 
 
+# file_options = {'TSLA': tsla_file,
+#                 'NVDA': nvda_file,
+#                 'DIS': dis_file,
+#                 'AAPL': aapl_file,
+#                 'BTC-USD': btc_file
+#                 }
 
 st.title('Visualizing Model Performance')
 st.subheader("Closing Price Predictions")
@@ -16,9 +31,26 @@ start_date = "1950-01-01"
 curr_date = date.today()
 trail = 90
 
+# file_options = ('TSLA_model_data.csv',
+#                 'NVDA_model_data.csv',
+#                 'DIS_model_data.csv',
+#                 'AAPL_model_data.csv',
+#                 'BTC-USD_model_data.csv')
+
+# uploaded_files = st.file_uploader('Select data', file_options)
+# for file in uploaded_files:
+#     bytes_data = file.read()
+#     st.write('filename: ', file.name[:-15])
+#     st.write(bytes_data)
+
+@st.cache
 def get_data(ticker):
-    data = pd.read_csv('file:///Users/hamzarashid/stock_models/' + ticker + '_model_data.csv')
+    data = pd.read_csv(ticker + '_model_data.csv')
     return data
+
+df = get_data(user_choice_ticker)
+st.subheader(user_choice_ticker)
+st.dataframe(df)
 # @st.cache(allow_output_mutation=True, show_spinner=False)
 # def get_test_data(ticker):
 #     # file = st.file_uploader(ticker + '_model_data.csv')
@@ -90,5 +122,7 @@ def get_data(ticker):
 # st.write(data)
 
 if __name__ == '__main__':
+    # tsla = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
+    # print(tsla)
     data = get_data('TSLA')
     print(data)
