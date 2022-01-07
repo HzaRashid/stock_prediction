@@ -20,17 +20,17 @@ start_date = "1950-01-01"
 curr_date = date.today()
 trail = 90
 
-@st.cache
-def get_data(ticker):
-    file = file_options.get(ticker)
-    data = pd.read_csv(file)
-    data = data.rename(columns={'Unnamed: 0': 'Date'})
-    data.index = data['Date']
-    data = data.drop(columns={'Date'})
-    data.reset_index(inplace=True)
-    return data
+# @st.cache
+# def get_data(ticker):
+#     file = file_options.get(ticker)
+#     data = pd.read_csv(file)
+#     data = data.rename(columns={'Unnamed: 0': 'Date'})
+#     data.index = data['Date']
+#     data = data.drop(columns={'Date'})
+#     data.reset_index(inplace=True)
+#     return data
 
-df = get_data(user_choice_ticker)
+df = pd.read_csv(tsla_csv)
 st.subheader(user_choice_ticker)
 st.dataframe(df)
 
@@ -38,8 +38,8 @@ if __name__ == '__main__':
     # tsla = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
     # print(tsla)
     # tsla_file = 'file://' + Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
-    data = get_data('TSLA')
-    print(data)
+    # data = get_data('TSLA')
+    print(df)
 
 
 
