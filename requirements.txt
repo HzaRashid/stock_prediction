@@ -1,11 +1,7 @@
-sklearn
-keras
-tensorflow
 plotly
 pandas_datareader
 pandas
 streamlit
-numpy
 datetime
 TSLA_model_data.csv
 NVDA_model_data.csv
