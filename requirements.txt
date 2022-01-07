@@ -3,8 +3,8 @@ pandas_datareader
 pandas
 streamlit
 datetime
-/Users/hamzarashid/tensorflow-test/TSLA_model_data.csv
-/Users/hamzarashid/tensorflow-test/NVDA_model_data.csv
-/Users/hamzarashid/tensorflow-test/DIS_model_data.csv
-/Users/hamzarashid/tensorflow-test/AAPL_model_data.csv
-/Users/hamzarashid/tensorflow-test/BTC-USD_model_data.csv
+file:///Users/hamzarashid/tensorflow-test/TSLA_model_data.csv
+file:///Users/hamzarashid/tensorflow-test/NVDA_model_data.csv
+file:///Users/hamzarashid/tensorflow-test/DIS_model_data.csv
+file:///Users/hamzarashid/tensorflow-test/AAPL_model_data.csv
+file:///Users/hamzarashid/tensorflow-test/BTC-USD_model_data.csv
