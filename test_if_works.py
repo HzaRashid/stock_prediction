@@ -16,16 +16,16 @@ curr_date = date.today()
 trail = 90
 
 tsla_file = Path(__file__).parents[1] / 'tensorflow-test/TSLA_model_data.csv'
-df = pd.read_csv(filepath_or_buffer=tsla_file)
-st.subheader(user_choice_ticker)
-st.dataframe(df)
+# df = pd.read_csv(filepath_or_buffer=tsla_file)
+# st.subheader(user_choice_ticker)
+# st.dataframe(df)
 
 if __name__ == '__main__':
     # tsla = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
     # print(tsla)
     # tsla_file = 'file://' + Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
     # data = get_data('TSLA')
-    print(df)
+    # print(df)
 
 
 
