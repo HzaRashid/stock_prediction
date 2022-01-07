@@ -26,7 +26,7 @@ def load_data():
         ticker_data = ticker_data.rename(columns={'Unnamed: 0': 'Date'})
         ticker_data.index = ticker_data['Date']
         ticker_data = ticker_data.drop(columns={'Date'})
-        ticker_data.reset_index(inplace=True)
+        # ticker_data.reset_index(inplace=True)
 
         # map the ticker to corresponding data
         model_data[ticker] = ticker_data
