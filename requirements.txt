@@ -7,3 +7,8 @@ pandas
 streamlit
 numpy
 datetime
+TSLA_model_data.csv
+NVDA_model_data.csv
+DIS_model_data.csv
+AAPL_model_data.csv
+BTC-USD_model_data.csv
