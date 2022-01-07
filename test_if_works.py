@@ -16,7 +16,7 @@ curr_date = date.today()
 trail = 90
 
 tsla_file = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
-df = pd.read_csv(str(tsla_file))
+df = pd.read_csv(filepath_or_buffer=tsla_file)
 st.subheader(user_choice_ticker)
 st.dataframe(df)
 
