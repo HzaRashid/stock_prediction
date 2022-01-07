@@ -16,15 +16,25 @@ curr_date = date.today()
 trail = 90
 
 
+model_data = {}
+for ticker in ticker_options:
+    filename = ticker + '_model_data.csv'
+    fpath = Path(__file__).parent/filename
+    data = pd.read_csv(fpath)
+    data = data.rename(columns={'Unnamed: 0': 'Date'})
+    data.index = data['Date']
+    data = data.drop(columns={'Date'})
+    data.reset_index(inplace=True)
+    model_data[ticker] = data
 
-tsla_file = Path(__file__).parent / 'TSLA_model_data.csv'
-# tsla_file = Path(__file__).parents[1] / 'TSLA_model_data.csv'
-# tsla_file = Path(__file__).parents[1] / 'TSLA_model_data.csv'
-# tsla_file = Path(__file__).parents[1] / 'TSLA_model_data.csv'
-# tsla_file = Path(__file__).parents[1] / 'TSLA_model_data.csv'
+# tsla_fpath = Path(__file__).parent / 'TSLA_model_data.csv'
+# nvda_fpath = Path(__file__).parents[1] / 'TSLA_model_data.csv'
+# dis_fpath = Path(__file__).parents[1] / 'TSLA_model_data.csv'
+# aapl_fpath = Path(__file__).parents[1] / 'TSLA_model_data.csv'
+# btc_fpath = Path(__file__).parents[1] / 'TSLA_model_data.csv'
 fuck = pd.read_csv('TSLA_model_data.csv')
 st.write(fuck)
-print(fuck)
+print(model_data)
 # df = pd.read_csv(filepath_or_buffer=tsla_file)
 # st.subheader(user_choice_ticker)
 # st.dataframe(df)
