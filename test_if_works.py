@@ -2,30 +2,30 @@ from plotly import graph_objs as go
 from datetime import date
 import streamlit as st
 import pandas as pd
-# from pathlib import Path
+from pathlib import Path
 
 # tsla = Path(__file__).parents[1]/'stock_models/TSLA_model_data.csv'
 
-# tsla_file = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
+tsla_file = 'file://' + str(Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv')
 # nvda_file = Path(__file__).parents[1] / 'stock_models/NVDA_model_data.csv'
 # dis_file = Path(__file__).parents[1] / 'stock_models/DIS_model_data.csv'
 # aapl_file = Path(__file__).parents[1] / 'stock_models/AAPL_model_data.csv'
 # btc_file = Path(__file__).parents[1] / 'stock_models/BTC-USD_model_data.csv'
 
-
-# file_options = {'TSLA': tsla_file,
-#                 'NVDA': nvda_file,
-#                 'DIS': dis_file,
-#                 'AAPL': aapl_file,
-#                 'BTC-USD': btc_file
-#                 }
+# file:///Users/hamzarashid/tensorflow-test/TSLA_model_data.csv
+# file:///Users/hamzarashid/tensorflow-test/NVDA_model_data.csv
+# file:///Users/hamzarashid/tensorflow-test/DIS_model_data.csv
+# file:///Users/hamzarashid/tensorflow-test/AAPL_model_data.csv
+# file:///Users/hamzarashid/tensorflow-test/BTC-USD_model_data.csv
+file_options = {'TSLA': tsla_file,
+                }
 
 st.title('Visualizing Model Performance')
 st.subheader("Closing Price Predictions")
 
 ticker_options = ['TSLA', 'NVDA', 'DIS', 'AAPL', 'BTC-USD']
 
-user_choice_ticker = st.selectbox('Enter ticker', ticker_options)
+user_choice_ticker = st.selectbox('Enter ticker', ['TSLA'])
 
 start_date = "1950-01-01"
 curr_date = date.today()
@@ -45,7 +45,11 @@ trail = 90
 
 @st.cache
 def get_data(ticker):
-    data = pd.read_csv(ticker + '_model_data.csv')
+    file = file_options.get(ticker)
+    data = pd.read_csv(file)
+    data = data.rename(columns={'Unnamed: 0': 'Date'})
+    data.index = data['Date']
+    data = data.drop(columns={'Date'})
     return data
 
 df = get_data(user_choice_ticker)
@@ -124,5 +128,6 @@ st.dataframe(df)
 if __name__ == '__main__':
     # tsla = Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
     # print(tsla)
+    # tsla_file = 'file://' + Path(__file__).parents[1] / 'stock_models/TSLA_model_data.csv'
     data = get_data('TSLA')
     print(data)
