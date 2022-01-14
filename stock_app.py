@@ -11,7 +11,7 @@ ticker_options = ['TSLA', 'NVDA', 'DIS', 'AAPL', 'BTC-USD']
 
 user_choice_ticker = st.selectbox('Enter ticker', ticker_options)
 
-# create dictionary mapping tickers to corresponding model's test data
+
 @st.cache(show_spinner=False)
 def load_data():
     model_data = {}
