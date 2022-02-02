@@ -1,4 +1,4 @@
 plotly
 streamlit
 pandas
-pathlib
+pathlib==1.0.1
