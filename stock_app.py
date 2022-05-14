@@ -2,7 +2,6 @@ from plotly import graph_objs as go
 import streamlit as st
 import pandas as pd
 import os
-from pathlib import Path
 
 st.title('Visualizing Model Performance')
 st.subheader("Closing Price Predictions")
