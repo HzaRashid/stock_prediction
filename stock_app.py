@@ -1,8 +1,8 @@
 from plotly import graph_objs as go
 import streamlit as st
 import pandas as pd
+import os
 from pathlib import Path
-
 
 st.title('Visualizing Model Performance')
 st.subheader("Closing Price Predictions")
@@ -11,7 +11,7 @@ ticker_options = ['TSLA', 'NVDA', 'DIS', 'AAPL', 'BTC-USD']
 
 user_choice_ticker = st.selectbox('Enter ticker', ticker_options)
 
-
+# create dictionary mapping tickers to corresponding model's test data
 @st.cache(show_spinner=False)
 def load_data():
     model_data = {}
@@ -19,9 +19,10 @@ def load_data():
 
         # get filename and path of test data
         filename = ticker + '_model_data.csv'
-        fpath = Path(__file__).parent/filename
+        fpath = os.path.abspath(filename)
 
         # create dataframe
+
         ticker_data = pd.read_csv(fpath)
         ticker_data = ticker_data.rename(columns={'Unnamed: 0': 'Date'})
         ticker_data.index = ticker_data['Date']
